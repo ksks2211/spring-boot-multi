@@ -1,0 +1,8 @@
+
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation project(":comp-base")
+    testRuntimeOnly 'com.h2database:h2'
+}
+

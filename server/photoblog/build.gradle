@@ -1,0 +1,9 @@
+
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation project(":web-page")
+    runtimeOnly 'com.h2database:h2'
+}
+

@@ -1,0 +1,81 @@
+buildscript {
+    ext {
+        springBootVersion = '2.6.10'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+
+    }
+}
+
+allprojects {
+    group = "kr.yoonyeong"
+    version = "1.0.0"
+}
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "org.springframework.boot"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "idea"
+
+    sourceCompatibility = "11"
+
+    repositories {
+        mavenCentral()
+    }
+
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+
+    dependencies {
+
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//        implementation 'org.springframework.boot:spring-boot-starter-security'
+
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+    test {
+        useJUnitPlatform()
+    }
+}
+
+["common", "comp","web"].each {
+    def subProjectDir = new File(projectDir, it)
+    subProjectDir.eachDir {dir->
+        String projectName = ":${it}-${dir.name}"
+
+        project(projectName){
+            bootJar.enabled(false)
+            jar.enabled(true)
+        }
+    }
+}
+
+["server"].each {
+    def subProjectDir = new File(projectDir, it)
+    subProjectDir.eachDir {dir->
+        String projectName = ":${it}-${dir.name}"
+
+        project(projectName){
+            jar.enabled(false)
+        }
+    }
+}
+
+help.enabled(false)

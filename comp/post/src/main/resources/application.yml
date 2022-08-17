@@ -1,0 +1,8 @@
+spring:
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    properties:
+      ddl-auto: create
+      hibernate:
+        format_sql: true
